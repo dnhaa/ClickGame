@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -68,6 +69,23 @@ public class UI {
         
         
     }
+    public void createArrows(int bgNum, int x, int y, int width, int height, String fileName1, String fileName2) {
+        ImageIcon arrowIcon1 = new ImageIcon (getClass().getResource(fileName1));
+        JButton bt1 = new JButton();
+        bt1.setBounds(x, y, width, height);
+        bt1.setIcon(arrowIcon1);
+        bt1.setBackground(Color.BLACK);
+        
+        
+        
+        ImageIcon arrowIcon2 = new ImageIcon (getClass().getResource(fileName2));
+        JButton bt2 = new JButton();
+        bt2.setBounds(1050 - x, y, width, height);
+        bt2.setIcon(arrowIcon2);     
+        bt2.setBackground(Color.BLACK);
+        panels[bgNum].add(bt1);
+        panels[bgNum].add(bt2);
+    }
     public void createObject(int bgNum, int x, int y, int width, int height, String fileName, String choice1, String choice2, String choice3, String obj) {
         JPopupMenu popMenu = new JPopupMenu();
         
@@ -126,6 +144,7 @@ public class UI {
     public void generateScreen() {
         // SCREEN 1
         createBackground(1, "/resource/Seirai-Island.png");
+        createArrows(1, 10, 260, 50, 50, "/resource/arrow-left.png", "/resource/arrow-right.png");
         createObject(1, 800, 320, 200, 200, "/resource/question.png", "Greet", "Save", "Kill", "Character");
     }
 }
