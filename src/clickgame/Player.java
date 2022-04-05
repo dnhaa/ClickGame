@@ -29,7 +29,7 @@ public class Player {
     public void setPlayerDefaultStatus() {
         playerMaxLife = 5;
         playerLife = 3;
-        hasEgg = false;
+        hasRope = false;
         hasKnife = false;
         hasEgg = false;
         hasTorch = false;
@@ -39,14 +39,11 @@ public class Player {
     public void updatePlayerStatus() {
         //remove all life icon
         for (int i = 0; i < 5; i++) {
-            cg.ui.lifeLabel[i] = new JLabel();
             cg.ui.lifeLabel[i].setVisible(false);
         }
-        int lifeCount = playerLife;
+        int lifeCount = playerLife - 1;
         
-        while (lifeCount  != 0) {
-//            System.out.println(lifeCount);
-            cg.ui.lifeLabel[lifeCount] = new JLabel();
+        while (lifeCount != -1) {
             cg.ui.lifeLabel[lifeCount].setVisible(true);
             lifeCount--;
         }
@@ -54,12 +51,20 @@ public class Player {
         //check player's items
         if (!hasKnife)
             cg.ui.knifeLabel.setVisible(false);
+        else
+            cg.ui.knifeLabel.setVisible(true);
         if (!hasRope)
             cg.ui.ropeLabel.setVisible(false);
+        else
+            cg.ui.ropeLabel.setVisible(true);
         if (!hasTorch)
             cg.ui.torchLabel.setVisible(false);
+        else
+            cg.ui.torchLabel.setVisible(true);
         if (!hasEgg)
             cg.ui.eggLabel.setVisible(false);
+        else
+            cg.ui.eggLabel.setVisible(true);
     }
     
 }

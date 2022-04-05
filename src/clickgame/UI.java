@@ -30,11 +30,15 @@ public class UI {
     JPanel inventoryPanel;
     JLabel ropeLabel, knifeLabel, eggLabel, torchLabel;
     
+    public JLabel titleLabel;
+    public JButton restartBtn;
+    
     public UI(ClickGame cg) {
         this.cg = cg;
         createFrame();
         createPlayerField();
         generateScreen();
+        createGameOverField();
         frame.setVisible(true);
     }
     public void createFrame() {
@@ -64,6 +68,7 @@ public class UI {
         panels[bgNum].setBounds(50, 50, 1100, 520);
         panels[bgNum].setBackground(Color.CYAN);
         panels[bgNum].setLayout(null);
+        panels[bgNum].setVisible(false);
         frame.add(panels[bgNum]);
         
         
@@ -114,10 +119,18 @@ public class UI {
         Image image = lifeIcon.getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT);
         lifeIcon = new ImageIcon(image);
         
-        for (JLabel label : lifeLabel) {
-            label = new JLabel();
-            label.setIcon(lifeIcon);
-            lifePanel.add(label);
+//        for (JLabel label : lifeLabel) {
+//            label = new JLabel();
+//            label.setIcon(lifeIcon);
+//            lifePanel.add(label);
+//        }
+        
+        int i = 0;
+        while (i < 5) {
+            lifeLabel[i] = new JLabel();
+            lifeLabel[i].setIcon(lifeIcon);
+            lifePanel.add(lifeLabel[i]);
+            i++;
         }
         
         inventoryPanel = new JPanel();
@@ -198,6 +211,25 @@ public class UI {
         
         panels[bgNum].add(objLabel);
         panels[bgNum].add(labels[bgNum]);
+    }
+    public void createGameOverField() {
+        titleLabel = new JLabel("", JLabel.CENTER);
+        titleLabel.setBounds(405, 150, 400, 200);
+        titleLabel.setForeground(Color.red);
+        titleLabel.setFont(new Font("Osaka", Font.BOLD, 28));
+        titleLabel.setVisible(false);
+        frame.add(titleLabel);
+        
+        restartBtn = new JButton();
+        restartBtn.setBounds(550, 320, 120, 50);
+        restartBtn.setBorder(null);
+        restartBtn.setBackground(null);
+        restartBtn.setForeground(Color.white);
+        restartBtn.setFocusPainted(false);
+        restartBtn.addActionListener(cg.ah);
+        restartBtn.setActionCommand("restart");
+        restartBtn.setVisible(false);
+        frame.add(restartBtn);
     }
     public void generateScreen() {
         // SCREEN 1

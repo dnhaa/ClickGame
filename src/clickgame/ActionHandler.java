@@ -32,6 +32,10 @@ public class ActionHandler implements ActionListener{
                 break;
             case "":
                 break;
+            case "restart":
+                cg.sceneChanger.existGameOverScene();
+                cg.sceneChanger.showScene1();
+                break;
         }
     }
     
