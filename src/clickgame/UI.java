@@ -3,6 +3,8 @@ package clickgame;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
@@ -22,11 +24,16 @@ public class UI {
     public JTextArea ta;
     public JPanel panels[] = new JPanel[10];
     public JLabel labels[] = new JLabel[10];
+    
+    JPanel lifePanel;
+    JLabel lifeLabel[] = new JLabel[5];
+    JPanel inventoryPanel;
+    JLabel ropeLabel, knifeLabel, eggLabel, torchLabel;
+    
     public UI(ClickGame cg) {
         this.cg = cg;
         createFrame();
-//        createBackground();
-//        createObject();
+        createPlayerField();
         generateScreen();
         frame.setVisible(true);
     }
@@ -34,7 +41,7 @@ public class UI {
         frame = new JFrame();
         
         
-        ta = new JTextArea("I WANT TO DIE...");
+        ta = new JTextArea("YOU WAKE UP TO A STRANGE GIRL LOOKING AT YOU...");
         ta.setBounds(50, 520, 1100, 150);
         ta.setBackground(Color.white);
         ta.setForeground(Color.black);
@@ -65,16 +72,21 @@ public class UI {
         ImageIcon icon = new ImageIcon(getClass().getResource(fileName));
                                                   //  "/resource/Seirai-Island.png"
         labels[bgNum].setIcon(icon);
-        panels[bgNum].add(labels[1]);
+        panels[bgNum].add(labels[bgNum]);
         
         
     }
-    public void createArrows(int bgNum, int x, int y, int width, int height, String fileName1, String fileName2) {
+    public void createArrows(int bgNum, int x, int y, int width, int height, String fileName1, String fileName2, String command) {
         ImageIcon arrowIcon1 = new ImageIcon (getClass().getResource(fileName1));
         JButton bt1 = new JButton();
         bt1.setBounds(x, y, width, height);
         bt1.setIcon(arrowIcon1);
-        bt1.setBackground(Color.BLACK);
+        bt1.setBackground(null);
+        bt1.setContentAreaFilled(false);
+        bt1.setFocusPainted(false);
+        bt1.setBorderPainted(false);
+        bt1.addActionListener(cg.ah);
+        bt1.setActionCommand(command);
         
         
         
@@ -82,9 +94,55 @@ public class UI {
         JButton bt2 = new JButton();
         bt2.setBounds(1050 - x, y, width, height);
         bt2.setIcon(arrowIcon2);     
-        bt2.setBackground(Color.BLACK);
+        bt2.setBackground(null);
+        bt2.setContentAreaFilled(false);
+        bt2.setFocusPainted(false);
+        bt2.setBorderPainted(false);
+        bt2.addActionListener(cg.ah);
+        bt2.setActionCommand(command);
+        
         panels[bgNum].add(bt1);
         panels[bgNum].add(bt2);
+    }
+    public void createPlayerField() {
+        lifePanel = new JPanel();
+        lifePanel.setBounds(50, 0, 200, 50);
+        lifePanel.setBackground(Color.BLACK);
+        lifePanel.setLayout(new GridLayout(1, 5));
+        frame.add(lifePanel);
+        ImageIcon lifeIcon = new ImageIcon(getClass().getResource("/resource/heart.png"));
+        Image image = lifeIcon.getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT);
+        lifeIcon = new ImageIcon(image);
+        
+        for (JLabel label : lifeLabel) {
+            label = new JLabel();
+            label.setIcon(lifeIcon);
+            lifePanel.add(label);
+        }
+        
+        inventoryPanel = new JPanel();
+        inventoryPanel.setBounds(900, 0, 160, 50);
+        inventoryPanel.setBackground(Color.BLACK);
+        inventoryPanel.setLayout(new GridLayout(1, 4));
+        frame.add(inventoryPanel);
+        ImageIcon eggIcon = new ImageIcon(getClass().getResource("/resource/egg.png"));
+        ImageIcon torchIcon = new ImageIcon(getClass().getResource("/resource/torch.png"));
+        ImageIcon knifeIcon = new ImageIcon(getClass().getResource("/resource/knife.png"));
+        ImageIcon ropeIcon = new ImageIcon(getClass().getResource("/resource/rope.png"));
+        eggLabel = new JLabel();
+        torchLabel = new JLabel();
+        knifeLabel = new JLabel();
+        ropeLabel = new JLabel();
+        eggLabel.setIcon(eggIcon);
+        torchLabel.setIcon(torchIcon);
+        knifeLabel.setIcon(knifeIcon);
+        ropeLabel.setIcon(ropeIcon);
+        inventoryPanel.add(torchLabel);
+        inventoryPanel.add(eggLabel);
+        inventoryPanel.add(knifeLabel);
+        inventoryPanel.add(ropeLabel);
+        
+        
     }
     public void createObject(int bgNum, int x, int y, int width, int height, String fileName, String choice1, String choice2, String choice3, String obj) {
         JPopupMenu popMenu = new JPopupMenu();
@@ -144,7 +202,14 @@ public class UI {
     public void generateScreen() {
         // SCREEN 1
         createBackground(1, "/resource/Seirai-Island.png");
-        createArrows(1, 10, 260, 50, 50, "/resource/arrow-left.png", "/resource/arrow-right.png");
+        createArrows(1, 10, 260, 50, 50, "/resource/arrow-left.png", "/resource/arrow-right.png", "toScene02");
         createObject(1, 800, 320, 200, 200, "/resource/question.png", "Greet", "Save", "Kill", "Character");
+        
+        //SCENE 2
+        createBackground(2, "/resource/ice-mountain.png");
+        createArrows(2, 10, 260, 50, 50, "/resource/arrow-left.png", "/resource/arrow-right.png", "toScene01");
+        createObject(2, 800, 320, 200, 200, "/resource/question.png", "Greet", "Save", "Kill", "Character");
+        
     }
+    
 }

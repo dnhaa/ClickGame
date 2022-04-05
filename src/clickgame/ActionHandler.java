@@ -24,6 +24,14 @@ public class ActionHandler implements ActionListener{
             case "KillCharacter":
                 cg.characterEvent.killCharacter();
                 break;
+            case "toScene01":
+                cg.sceneChanger.showScene1();
+                break;
+            case "toScene02":
+                cg.sceneChanger.showScene2();
+                break;
+            case "":
+                break;
         }
     }
     
